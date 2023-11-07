@@ -1,0 +1,15 @@
+
+.form-subsection-container h4 {
+    margin: 2px;
+}
+
+.horizontal-container {
+    display: flex;
+    gap: 32px;
+}
+
+.application-form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}

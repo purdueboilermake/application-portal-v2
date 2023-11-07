@@ -1,0 +1,10 @@
+
+.logo-container {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+}
+
+.logo-container h2 {
+    margin: 0;
+}
