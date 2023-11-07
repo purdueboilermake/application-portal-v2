@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { AppShell, Container, Flex, Image, Space } from '@mantine/core';
+import { AppShell, Image, Space } from '@mantine/core';
 
 import main_logo from './assets/main_logo.png';
 
@@ -9,7 +9,7 @@ import { User, getAuth, onAuthStateChanged } from "firebase/auth";
 import { AuthContext } from "./auth-context";
 import "./firebase-config";
 
-const responsiveToolbarHeight = { xs: 48, sm: 60, md: 60, lg: 76, xl: 76 };
+const responsiveToolbarHeight = { base: 48, sm: 60, lg: 76 };
 
 export function Root() {
 
@@ -27,15 +27,15 @@ export function Root() {
     }
   );
 
-  /*
   return (
     <AppShell
-      // header={{ height: { base: 48, sm: 60, lg: 76 } }}
+      header={{ height: responsiveToolbarHeight }}
+      padding={responsiveToolbarHeight}
       withBorder={false}
     >
       <AppShell.Header>
         <div className="logo-container">
-          <Image src={main_logo} h={{ base: 48, sm: 60, lg: 76 }} w="auto" fit="contain" />
+          <Image src={main_logo} h={responsiveToolbarHeight} w="auto" fit="contain" />
           <h2>BoilerMake Apply</h2>
           <Space />
           { user &&
@@ -52,28 +52,5 @@ export function Root() {
         </AuthContext.Provider>
       </AppShell.Main>
     </AppShell>
-  );*/
-
-  return (
-    <Container>
-      <header>
-        <Flex h={responsiveToolbarHeight} p={16} align='center' gap={32}>
-          <Image src={main_logo} h={responsiveToolbarHeight} w="auto" fit="contain" />
-          <h2 style={{margin: '0'}}>BoilerMake Apply</h2>
-          <span style={{flex: 1}} />
-          { user &&
-            <p>{ user.displayName }</p>
-          }
-          { !user &&
-            <p>Not logged in</p>
-          }
-        </Flex>
-      </header>
-      <main>
-        <AuthContext.Provider value={user}>
-          <Outlet />
-        </AuthContext.Provider>
-      </main>
-    </Container>
-  )
+  );
 }
