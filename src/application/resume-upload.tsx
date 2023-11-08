@@ -18,6 +18,7 @@ export const ResumeUpload: FC<ResumeUploadProps> = (props: ResumeUploadProps) =>
 
   const clearFile = () => {
     setFile(null);
+    props.onFileChange(null);
   };
 
   useEffect(() => {
