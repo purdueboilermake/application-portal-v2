@@ -10,7 +10,7 @@ export const combineValidators = (validators: StringFieldValidator[]): StringFie
 }
 
 export const nonBlankString: StringFieldValidator = (value: string | null) => {
-    return !value || value.trim().length > 0 ? null : 'Value must not be blank';
+    return value && value.trim().length > 0 ? null : 'Value must not be blank';
 }
 
 export const validEmail: StringFieldValidator = (value: string | null) => {
