@@ -1,31 +1,42 @@
-import { Button, Center } from "@mantine/core";
-import { Auth, GithubAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
-import { NavigateFunction, useNavigate } from "react-router-dom";
+import { Button, Center, Group, Loader, Text} from "@mantine/core";
+import { GithubAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 import { ServiceContainer } from "../service/service-container";
-import { ApplicationService } from "../service/application-service";
-
-const loginWithGithub = (auth: Auth, applicationService: ApplicationService, navigator: NavigateFunction) => {
-  const provider = new GithubAuthProvider();
-  signInWithPopup(auth, provider)
-    .then(result => {
-      const user = result.user;
-      return applicationService.getOrCreateUserApplication(user);
-    })
-    .then(userApplication => {
-      console.log(`Got user application id ${userApplication.id}`);
-      navigator(`/application/${userApplication.id}`);
-    })
-}
+import { useCallback, useMemo, useState } from "react";
 
 export function LoginPage() {
 
-  const applicationService = ServiceContainer.instance().applicationService;
+  const applicationService = useMemo(() => ServiceContainer.instance().applicationService, []);
   const auth = getAuth();
   const navigator = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [indicatorMessage, setIndicatorMessage] = useState<string | null>(null);
+
+  const loginWithGithub = useCallback(async () => {
+    setLoading(true);
+    setIndicatorMessage('logging in...');
+    const provider = new GithubAuthProvider();
+    const result = await signInWithPopup(auth, provider)
+    const user = result.user;
+    setIndicatorMessage('Preparing your application...');
+    const userApplication = await applicationService.getOrCreateUserApplication(user);
+    console.log(`Got user application id ${userApplication.id}`);
+    navigator(`/application/${userApplication.id}`);
+  }, [auth, navigator, applicationService]);
 
   return (
     <Center h={100}>
-      <Button onClick={() => loginWithGithub(auth, applicationService, navigator)}>Login with GitHub</Button>
+      <Group>
+        <Button onClick={loginWithGithub}>
+          Login with GitHub
+        </Button>
+        { loading &&
+          <Loader />
+        }
+        { indicatorMessage &&
+          <Text>{indicatorMessage}</Text>
+        }
+      </Group>
     </Center>
   )
 }
