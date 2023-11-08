@@ -1,4 +1,6 @@
 
+export type BoilermakeApplicationStatus = 'UNSUBMITTED' | 'SUBMITTED' | 'DENIED' | 'WAITLISTED' | 'ACCEPTED';
+
 export interface BoilermakeApplication {
     firstName: string;
     lastName: string;
@@ -21,6 +23,8 @@ export interface BoilermakeApplication {
     agreeToCodeOfConduct: boolean;
     agreeToTermsAndConditions: boolean;
     recieveCommunications: boolean;
+    lastSubmitted: Date | null;
+    appStatus: BoilermakeApplicationStatus;
 }
 
 export const defaultBoilermakeApplication: BoilermakeApplication = {
@@ -45,4 +49,6 @@ export const defaultBoilermakeApplication: BoilermakeApplication = {
     agreeToCodeOfConduct: false,
     agreeToTermsAndConditions: false,
     recieveCommunications: true,
+    lastSubmitted: null,
+    appStatus: 'UNSUBMITTED',
 }

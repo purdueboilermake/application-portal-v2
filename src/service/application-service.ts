@@ -1,7 +1,7 @@
 import { FirebaseApp } from "firebase/app";
 import { User } from "firebase/auth";
 import { CollectionReference, Firestore, collection, getFirestore, where, query, getDocs,  DocumentReference, addDoc, getDoc, doc, setDoc } from "firebase/firestore";
-import { BoilermakeApplication, defaultBoilermakeApplication } from "./application";
+import { BoilermakeApplication, BoilermakeApplicationStatus, defaultBoilermakeApplication } from "./application";
 import { FileUploadService } from "./file-upload-service";
 import "../firebase-config";
 
@@ -43,13 +43,25 @@ export class ApplicationService {
         return existingForm;
     }
 
-    async submitApplication(user: User, ref: DocumentReference, application: BoilermakeApplication, resume: File) {
+    async saveApplication(user: User, ref: DocumentReference, application: BoilermakeApplication, resume: File | null) {
+        await setDoc(ref, application);
+        if (resume) {
+            await this.fileUploadService.createOrReplaceUserResume(user, resume);
+        }
+    }
+
+    async submitApplication(user: User, ref: DocumentReference, application: BoilermakeApplication, resume: File | null) {
         console.log(ref);
+        // set that the last time this was submitted is now
+        application.lastSubmitted = new Date(Date.now());
+        application.appStatus = 'SUBMITTED';
         // set the application data
         await setDoc(ref, application);
 
         // upload the resume
-        await this.fileUploadService.createOrReplaceUserResume(user, resume);
+        if (resume) {
+            await this.fileUploadService.createOrReplaceUserResume(user, resume);
+        }
     }
 
     private async findUserForm(user: User): Promise<DocumentReference | null> {

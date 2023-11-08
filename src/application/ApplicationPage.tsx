@@ -1,4 +1,4 @@
-import { Button, Card, Container,  Grid, GridCol, LoadingOverlay, NumberInput, Select, TextInput, Textarea } from "@mantine/core";
+import { Anchor, Button, Card, Container,  Grid, GridCol, LoadingOverlay, NumberInput, Select, TextInput, Textarea } from "@mantine/core";
 import { FC, PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { AuthContext } from "../auth-context";
 import { useLoaderData, useNavigate } from "react-router-dom";
@@ -18,6 +18,8 @@ import { ResumeUpload } from "./resume-upload";
 import { ServiceContainer } from "../service/service-container";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { PhoneNumberInput } from "./phone-numer-input";
+import { ResumeFileInfo } from "../service/file-upload-service";
+import { notifications } from '@mantine/notifications';
 
 interface FormSubsectionProps extends PropsWithChildren {
   title: string;
@@ -39,7 +41,11 @@ export function ApplicationPage() {
   const applicationRef = useLoaderData() as DocumentReference;
   const currentUser = useContext(AuthContext);
 
+  const [lastSubmitted, setLastSubmitted] = useState<Date | null>(null);
+  const [existingResumeInfo, setExistingResumeInfo] = useState<ResumeFileInfo | null>(null);
+
   const applicationService = useMemo(() => ServiceContainer.instance().applicationService, []);
+  const fileUploadService = useMemo(() => ServiceContainer.instance().fileUploadService, []);
   const navigator = useNavigate();
 
   const form = useForm({
@@ -69,19 +75,25 @@ export function ApplicationPage() {
       documentData => {
         const applicationData = documentData.data() as BoilermakeApplication;
         form.setValues(applicationData);
+        setLastSubmitted(applicationData.lastSubmitted);
       }
     );
-  }, []);
+
+    if (currentUser) {
+      fileUploadService.existingResumeInfo(currentUser)
+        .then(setExistingResumeInfo);
+    }
+  }, [currentUser]);
 
   const [resumeFile, setResumeFile] = useState<File | null>(null);
 
   const [formDisabled, setFormDisabled] = useState<boolean>(true);
   useEffect(() => {
-    const valid = form.isValid() && resumeFile !== null;
+    const valid = form.isValid() && (resumeFile !== null || existingResumeInfo !== null);
     setFormDisabled(!valid);
-  }, [form, resumeFile]);
+  }, [form, resumeFile, existingResumeInfo]);
 
-  const [loadingVisible, { toggle }] = useDisclosure(false);
+  const [loadingVisible, { toggle, open, close }] = useDisclosure(false);
 
   const submitFormCallback = useCallback(async (formValues: BoilermakeApplication) => {
     if (!currentUser) {
@@ -89,9 +101,24 @@ export function ApplicationPage() {
     }
 
     toggle();
-    await applicationService.submitApplication(currentUser, applicationRef, formValues, resumeFile!);
+    await applicationService.submitApplication(currentUser, applicationRef, formValues, resumeFile);
     navigator('/confirmation');
   }, [resumeFile, currentUser, applicationService, applicationRef]);
+
+  const saveFormCallback = useCallback(async () => {
+
+    if (!currentUser) {
+      return;
+    }
+
+    open();
+    await applicationService.saveApplication(currentUser, applicationRef, form.values, resumeFile);
+    close();
+    notifications.show({
+      title: 'Application Saved',
+      message: 'Please return and submit your application later'
+    });
+  }, [resumeFile, currentUser, applicationService, applicationRef, form]);
 
   // TODO this is remarkably jank, but by god it'll geter done
   const isPhoneDevice = useMediaQuery('(max-width: 575px)');
@@ -141,13 +168,6 @@ export function ApplicationPage() {
               {...form.getInputProps('altEmail')}
               />
 
-            { /*
-            <TextInput
-              withAsterisk
-              label='Phone Number'
-              {...form.getInputProps('phone')}
-              />
-            */}
             <PhoneNumberInput
               form={form}
               />
@@ -217,12 +237,20 @@ export function ApplicationPage() {
             <ResumeUpload
               onFileChange={setResumeFile}
               />
+            { existingResumeInfo &&
+              <p>Resume already on file: <Anchor href={existingResumeInfo.downloadLink}>{existingResumeInfo.name}</Anchor></p>
+            }
           </FormSubsection>
           <FormSubsection title="Terms of Attending">
             <MlhComplianceCheckboxes form={form} />
           </FormSubsection>
 
-          <Button size="lg" disabled={formDisabled} style={{marginTop: 16}} type="submit">SUBMIT</Button>
+          <Button size="lg" disabled={formDisabled} style={{marginTop: 16}} variant="gradient" type="submit">
+            { lastSubmitted ? 'UPDATE' : 'SUBMIT' }
+          </Button>
+          <Button size="lg" style={{marginTop: 8}} variant="outline" onClick={saveFormCallback}>
+            SAVE PROGRESS
+          </Button>
         </form>
       </Card>
     </Container>
