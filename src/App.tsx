@@ -1,8 +1,10 @@
 import './App.css'
 
 import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
 
 import { MantineProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Root } from './Root';
 import { bmApplyTheme } from './theme';
@@ -46,6 +48,7 @@ const appRouter = createBrowserRouter([
 function App() {
   return (
     <MantineProvider theme={bmApplyTheme}>
+      <Notifications />
       <RouterProvider router={appRouter} />
     </MantineProvider>
   )
