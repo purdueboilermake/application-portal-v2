@@ -148,6 +148,8 @@ export function ApplicationPage() {
             <NumberInput
               withAsterisk
               label='Age'
+              allowNegative={false}
+              allowDecimal={false}
               {...form.getInputProps('age')}
               />
 
