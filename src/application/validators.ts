@@ -46,3 +46,15 @@ export const validAge: NumberFieldValidator = (value: number) => {
 
     return null;
 }
+
+export const validPhoneNumber: StringFieldValidator = (value: string | null) => {
+    if (!value || value.length === 0) {
+        return null;
+    }
+
+    const phoneRegex = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
+
+    return phoneRegex.test(value)
+        ? null
+        : 'Must be a valid phone number';
+}

@@ -13,10 +13,11 @@ import { SchoolSelector } from "./school-selector";
 import { DegreeSelector } from "./degree-selector";
 import { GraduationYearSelector } from "./grad-year-selector";
 import { MlhComplianceCheckboxes } from "./mlh-compliance-checkboxes";
-import { combineValidators, maxLength, nonBlankString, validAge, validEmail } from "./validators";
+import { combineValidators, maxLength, nonBlankString, validAge, validEmail, validPhoneNumber } from "./validators";
 import { ResumeUpload } from "./resume-upload";
 import { ServiceContainer } from "../service/service-container";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
+import { PhoneNumberInput } from "./phone-numer-input";
 
 interface FormSubsectionProps extends PropsWithChildren {
   title: string;
@@ -48,6 +49,7 @@ export function ApplicationPage() {
       firstName: nonBlankString,
       lastName: nonBlankString,
       gender: nonBlankString,
+      phone: combineValidators([nonBlankString, validPhoneNumber]),
       age: validAge,
       country: nonBlankString,
       degree: nonBlankString,
@@ -139,10 +141,15 @@ export function ApplicationPage() {
               {...form.getInputProps('altEmail')}
               />
 
+            { /*
             <TextInput
               withAsterisk
               label='Phone Number'
               {...form.getInputProps('phone')}
+              />
+            */}
+            <PhoneNumberInput
+              form={form}
               />
 
             <NumberInput
