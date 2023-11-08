@@ -11,6 +11,7 @@ import background from './assets/cave-background.png';
 import { ApplicationPage } from './application/ApplicationPage';
 import { loadApplicationOrLoginLoader } from './application/application-loader';
 import { rootLoader } from './root-loader';
+import { ConfirmationPage } from './confirmation/ConfirmationPage';
 
 const appRouter = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const appRouter = createBrowserRouter([
       {
         path: 'login',
         element: <LoginPage />
+      },
+      {
+        path: 'confirmation',
+        element: <ConfirmationPage />
       }
     ]
   }

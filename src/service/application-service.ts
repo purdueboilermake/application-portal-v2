@@ -1,13 +1,15 @@
 import { FirebaseApp } from "firebase/app";
 import { User } from "firebase/auth";
-import { CollectionReference, Firestore, collection, getFirestore, where, query, getDocs,  DocumentReference, addDoc, getDoc, doc } from "firebase/firestore";
+import { CollectionReference, Firestore, collection, getFirestore, where, query, getDocs,  DocumentReference, addDoc, getDoc, doc, updateDoc, setDoc } from "firebase/firestore";
 import { BoilermakeApplication, defaultBoilermakeApplication } from "./application";
+import { FileUploadService } from "./file-upload-service";
+import { app } from "../firebase-config";
 
 export class ApplicationService {
     private readonly firestore: Firestore;
     private readonly applications: CollectionReference;
 
-    constructor(firebaseApp?: FirebaseApp) {
+    constructor(firebaseApp?: FirebaseApp, private readonly fileUploadService: FileUploadService) {
         if (firebaseApp) {
             this.firestore = getFirestore(firebaseApp);
         } else {
@@ -39,6 +41,15 @@ export class ApplicationService {
         }
 
         return existingForm;
+    }
+
+    async submitApplication(user: User, ref: DocumentReference, application: BoilermakeApplication, resume: File) {
+        console.log(ref);
+        // set the application data
+        await setDoc(ref, application);
+
+        // upload the resume
+        await this.fileUploadService.createOrReplaceUserResume(user, resume);
     }
 
     private async findUserForm(user: User): Promise<DocumentReference | null> {

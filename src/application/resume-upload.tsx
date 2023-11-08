@@ -2,10 +2,17 @@ import { Button, FileButton, Group, Text } from "@mantine/core";
 import { FC, useEffect, useState } from "react";
 
 interface ResumeUploadProps {
+  onFileChange: (file: File | null) => void;
 }
 
-export const ResumeUpload: FC<ResumeUploadProps> = () => {
+const validateFileName = (name: string) => {
+  const checker = /\.pdf$/;
+  return checker.test(name)
+    ? null
+    : 'File must be a PDF';
+}
 
+export const ResumeUpload: FC<ResumeUploadProps> = (props: ResumeUploadProps) => {
   const [file, setFile] = useState<File | null>(null);
   const [fileErrorMessage, setFileErrorMessage] = useState<string | null>(null);
 
@@ -14,13 +21,17 @@ export const ResumeUpload: FC<ResumeUploadProps> = () => {
   };
 
   useEffect(() => {
-    if (file) {
-      const checker = /\.pdf$/;
-      const filenameError = checker.test(file.name)
-        ? null
-        : 'File must be a PDF';
-      setFileErrorMessage(filenameError);
+    if (!file) {
+      return;
     }
+    const errorName = validateFileName(file.name);
+
+    if (errorName) {
+      setFileErrorMessage(errorName);
+      return;
+    }
+
+    props.onFileChange(file);
   }, [file]);
 
   return (

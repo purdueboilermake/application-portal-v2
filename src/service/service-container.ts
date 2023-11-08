@@ -1,12 +1,14 @@
 import { FirebaseApp, getApp } from "firebase/app";
 import { ApplicationService } from "./application-service";
 import { AuthService } from "./auth-service";
+import { FileUploadService } from "./file-upload-service";
 
 export class ServiceContainer {
     private static _instance: ServiceContainer | null = null;
 
     public readonly applicationService: ApplicationService;
     public readonly authService: AuthService;
+    public readonly fileUploadService: FileUploadService;
 
     public static initialize(app?: FirebaseApp) {
         const firebaseApp = app ?? getApp();
@@ -21,7 +23,8 @@ export class ServiceContainer {
     }
 
     private constructor(firebaseApp: FirebaseApp) {
-        this.applicationService = new ApplicationService(firebaseApp);
         this.authService = new AuthService(firebaseApp);
+        this.fileUploadService = new FileUploadService(firebaseApp);
+        this.applicationService = new ApplicationService(firebaseApp, this.fileUploadService);
     }
 }

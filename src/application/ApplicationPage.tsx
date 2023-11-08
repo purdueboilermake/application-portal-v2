@@ -1,7 +1,7 @@
-import { Button, Card, Container,  Grid, GridCol, NumberInput, Select, TextInput, Textarea } from "@mantine/core";
-import { FC, PropsWithChildren, useContext, useEffect, useState } from "react";
+import { Button, Card, Container,  Grid, GridCol, LoadingOverlay, NumberInput, Select, TextInput, Textarea } from "@mantine/core";
+import { FC, PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { AuthContext } from "../auth-context";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { DocumentReference, onSnapshot } from "firebase/firestore";
 import { BoilermakeApplication, defaultBoilermakeApplication } from "../service/application";
 
@@ -15,6 +15,8 @@ import { GraduationYearSelector } from "./grad-year-selector";
 import { MlhComplianceCheckboxes } from "./mlh-compliance-checkboxes";
 import { combineValidators, maxLength, nonBlankString, validAge, validEmail } from "./validators";
 import { ResumeUpload } from "./resume-upload";
+import { ServiceContainer } from "../service/service-container";
+import { useDisclosure } from "@mantine/hooks";
 
 interface FormSubsectionProps extends PropsWithChildren {
   title: string;
@@ -35,6 +37,9 @@ export function ApplicationPage() {
 
   const applicationRef = useLoaderData() as DocumentReference;
   const currentUser = useContext(AuthContext);
+
+  const applicationService = useMemo(() => ServiceContainer.instance().applicationService, []);
+  const navigator = useNavigate();
 
   const form = useForm({
     initialValues: defaultBoilermakeApplication,
@@ -66,20 +71,36 @@ export function ApplicationPage() {
     );
   }, []);
 
+  const [resumeFile, setResumeFile] = useState<File | null>(null);
+
   const [formDisabled, setFormDisabled] = useState<boolean>(true);
   useEffect(() => {
-    setFormDisabled(!form.isValid());
-  }, [form]);
+    const valid = form.isValid() && resumeFile !== null;
+    setFormDisabled(!valid);
+  }, [form, resumeFile]);
+
+  const [loadingVisible, { toggle }] = useDisclosure(false);
+
+  const submitFormCallback = useCallback(async (formValues: BoilermakeApplication) => {
+    if (!currentUser) {
+      return;
+    }
+
+    toggle();
+    await applicationService.submitApplication(currentUser, applicationRef, formValues, resumeFile!);
+    navigator('/confirmation');
+  }, [resumeFile, currentUser, applicationService, applicationRef]);
 
   return (
-    <Container>
+    <Container pt={{ base: 1500, lg: 500, xl: 500 }} pb={50}>
       <Card>
         <h3>Application for {currentUser?.displayName}</h3>
-        <form onSubmit={form.onSubmit((values) => console.log(values))} className="application-form-container">
+        <form onSubmit={form.onSubmit(submitFormCallback)} className="application-form-container">
           <FormSubsection
             title="Personal Information"
           >
-            <Grid columns={2} w={'100%'}>
+            <LoadingOverlay visible={loadingVisible} loaderProps={{ 'children': 'Submitting...' }} />
+            <Grid columns={2}>
               <GridCol span={horizontalColSpan}>
                 <TextInput
                   withAsterisk
@@ -181,13 +202,15 @@ export function ApplicationPage() {
 
           </FormSubsection>
           <FormSubsection title="Resume Upload">
-            <ResumeUpload />
+            <ResumeUpload
+              onFileChange={setResumeFile}
+              />
           </FormSubsection>
           <FormSubsection title="Terms of Attending">
             <MlhComplianceCheckboxes form={form} />
           </FormSubsection>
 
-          <Button size="lg" disabled={formDisabled}>SUBMIT</Button>
+          <Button size="lg" disabled={formDisabled} style={{marginTop: 16}} type="submit">SUBMIT</Button>
         </form>
       </Card>
     </Container>

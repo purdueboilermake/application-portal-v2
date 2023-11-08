@@ -30,13 +30,12 @@ export function Root() {
   return (
     <AppShell
       header={{ height: responsiveToolbarHeight }}
-      padding={responsiveToolbarHeight}
       withBorder={false}
     >
       <AppShell.Header>
         <div className="logo-container">
           <Image src={main_logo} h={responsiveToolbarHeight} w="auto" fit="contain" />
-          <h2>BoilerMake Apply</h2>
+          <h4 style={{margin: 0}}>BoilerMake Apply</h4>
           <Space />
           { user &&
             <p>{ user.displayName }</p>
