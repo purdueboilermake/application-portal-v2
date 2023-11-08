@@ -1,15 +1,15 @@
 import { FirebaseApp } from "firebase/app";
 import { User } from "firebase/auth";
-import { CollectionReference, Firestore, collection, getFirestore, where, query, getDocs,  DocumentReference, addDoc, getDoc, doc, updateDoc, setDoc } from "firebase/firestore";
+import { CollectionReference, Firestore, collection, getFirestore, where, query, getDocs,  DocumentReference, addDoc, getDoc, doc, setDoc } from "firebase/firestore";
 import { BoilermakeApplication, defaultBoilermakeApplication } from "./application";
 import { FileUploadService } from "./file-upload-service";
-import { app } from "../firebase-config";
+import "../firebase-config";
 
 export class ApplicationService {
     private readonly firestore: Firestore;
     private readonly applications: CollectionReference;
 
-    constructor(firebaseApp?: FirebaseApp, private readonly fileUploadService: FileUploadService) {
+    constructor(private readonly fileUploadService: FileUploadService, firebaseApp: FirebaseApp) {
         if (firebaseApp) {
             this.firestore = getFirestore(firebaseApp);
         } else {

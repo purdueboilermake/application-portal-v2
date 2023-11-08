@@ -2,12 +2,11 @@ import './App.css'
 
 import '@mantine/core/styles.css';
 
-import { BackgroundImage, MantineProvider } from '@mantine/core';
+import { MantineProvider } from '@mantine/core';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Root } from './Root';
 import { bmApplyTheme } from './theme';
 import { LoginPage } from './login/LoginPage';
-import background from './assets/cave-background.png';
 import { ApplicationPage } from './application/ApplicationPage';
 import { loadApplicationOrLoginLoader } from './application/application-loader';
 import { rootLoader } from './root-loader';

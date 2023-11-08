@@ -25,6 +25,6 @@ export class ServiceContainer {
     private constructor(firebaseApp: FirebaseApp) {
         this.authService = new AuthService(firebaseApp);
         this.fileUploadService = new FileUploadService(firebaseApp);
-        this.applicationService = new ApplicationService(firebaseApp, this.fileUploadService);
+        this.applicationService = new ApplicationService(this.fileUploadService, firebaseApp);
     }
 }
