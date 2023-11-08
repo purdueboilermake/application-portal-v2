@@ -1,5 +1,5 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import { AppShell, Button, Image, Space } from '@mantine/core';
+import { AppShell, Button, Center, Image, Space } from '@mantine/core';
 
 import main_logo from './assets/main_logo.png';
 
@@ -37,6 +37,7 @@ export function Root() {
     <AppShell
       header={{ height: responsiveToolbarHeight }}
       withBorder={false}
+      padding={{ xs: 'sm', sm: 'sm', md: 'md', lg: 'xl', xl: 'xl' }}
     >
       <AppShell.Header>
         <div className="logo-container">
@@ -54,10 +55,12 @@ export function Root() {
           }
         </div>
       </AppShell.Header>
-      <AppShell.Main>
-        <AuthContext.Provider value={user}>
-          <Outlet />
-        </AuthContext.Provider>
+      <AppShell.Main style={{maxHeight: '100dvh', overflowY: 'auto'}}>
+        <Center>
+          <AuthContext.Provider value={user}>
+            <Outlet />
+          </AuthContext.Provider>
+        </Center>
       </AppShell.Main>
     </AppShell>
   );

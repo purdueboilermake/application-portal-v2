@@ -16,7 +16,7 @@ import { MlhComplianceCheckboxes } from "./mlh-compliance-checkboxes";
 import { combineValidators, maxLength, nonBlankString, validAge, validEmail } from "./validators";
 import { ResumeUpload } from "./resume-upload";
 import { ServiceContainer } from "../service/service-container";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 
 interface FormSubsectionProps extends PropsWithChildren {
   title: string;
@@ -91,8 +91,11 @@ export function ApplicationPage() {
     navigator('/confirmation');
   }, [resumeFile, currentUser, applicationService, applicationRef]);
 
+  // TODO this is remarkably jank, but by god it'll geter done
+  const isPhoneDevice = useMediaQuery('(max-width: 575px)');
+
   return (
-    <Container pt={{ base: 1500, lg: 500, xl: 500 }} pb={50}>
+    <Container pt={isPhoneDevice ? 90 : undefined} pb={50}>
       <Card>
         <h3>Application for {currentUser?.displayName}</h3>
         <form onSubmit={form.onSubmit(submitFormCallback)} className="application-form-container">
