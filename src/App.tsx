@@ -11,6 +11,7 @@ import { ApplicationPage } from './application/ApplicationPage';
 import { loadApplicationOrLoginLoader } from './application/application-loader';
 import { rootLoader } from './root-loader';
 import { ConfirmationPage } from './confirmation/ConfirmationPage';
+import { ProfilePage } from './profile/ProfilePage';
 
 const appRouter = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const appRouter = createBrowserRouter([
       {
         path: 'confirmation',
         element: <ConfirmationPage />
+      },
+      {
+        path: 'profile',
+        element: <ProfilePage />
       }
     ]
   }

@@ -6,23 +6,25 @@ export const loadApplicationOrLoginLoader: LoaderFunction = async ({ params }) =
     const authService = ServiceContainer.instance().authService;
     const applicationId = params.appId as string;
 
-    if (!authService.authenticated) {
+    const currentUser = await authService.currentUser();
+
+    if (!currentUser) {
         return redirect('/login');
     }
-
-    const currentUser = authService.currentUser!;
 
     const existingReference = await applicationService.findApplication(applicationId);
 
 
     if (!existingReference) {
         // THIS doesn't exist...
-        return;
+        const docRef = await applicationService.getOrCreateUserApplication(currentUser);
+        return redirect(`/application/${docRef.id}`);
     }
 
     const owns = await applicationService.userOwnsApplication(existingReference, currentUser);
     if (!owns) {
         // unauthenticated error
+        return redirect('/profile');
     }
 
     return existingReference;

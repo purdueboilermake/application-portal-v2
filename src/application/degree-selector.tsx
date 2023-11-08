@@ -5,6 +5,7 @@ import { Select } from "@mantine/core";
 
 interface DegreeSelectorProps {
   form: UseFormReturnType<BoilermakeApplication>;
+  disabled?: boolean;
 }
 
 const defaultDegreeOptions = [
@@ -16,7 +17,7 @@ const defaultDegreeOptions = [
   'Doctorate'
 ]
 
-export const DegreeSelector: FC<DegreeSelectorProps> = ({ form }: DegreeSelectorProps) => {
+export const DegreeSelector: FC<DegreeSelectorProps> = ({ form, disabled = false }: DegreeSelectorProps) => {
 
   return (
     <Select
@@ -24,6 +25,7 @@ export const DegreeSelector: FC<DegreeSelectorProps> = ({ form }: DegreeSelector
       label='Degree'
       placeholder="What degree are you currently pursuing"
       data={defaultDegreeOptions}
+      disabled={disabled}
       {...form.getInputProps('degree')}
       />
   )
