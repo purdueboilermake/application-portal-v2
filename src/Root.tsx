@@ -1,11 +1,11 @@
-import { Outlet } from "react-router-dom";
-import { AppShell, Image, Space } from '@mantine/core';
+import { Outlet, useNavigate } from "react-router-dom";
+import { AppShell, Button, Image, Space } from '@mantine/core';
 
 import main_logo from './assets/main_logo.png';
 
 import './Root.css';
-import { useState } from "react";
-import { User, getAuth, onAuthStateChanged } from "firebase/auth";
+import { useCallback, useState } from "react";
+import { User, getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { AuthContext } from "./auth-context";
 import "./firebase-config";
 
@@ -16,6 +16,7 @@ export function Root() {
   const auth = getAuth();
 
   const [user, setUser] = useState<User | null>(null);
+  const navigator = useNavigate();
 
   // watch the current user
   onAuthStateChanged(auth,
@@ -26,6 +27,11 @@ export function Root() {
       throw err;
     }
   );
+
+  const onLogout = useCallback(async () => {
+    await signOut(auth);
+    navigator('/login');
+  }, [auth]);
 
   return (
     <AppShell
@@ -38,7 +44,10 @@ export function Root() {
           <h4 style={{margin: 0}}>BoilerMake Apply</h4>
           <Space />
           { user &&
+            <>
             <p>{ user.displayName }</p>
+            <Button variant="subtle" c='red' onClick={onLogout}>Log Out</Button>
+            </>
           }
           { !user &&
             <p>Not logged in</p>
