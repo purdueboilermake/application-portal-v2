@@ -42,9 +42,7 @@ const appRouter = createBrowserRouter([
 function App() {
   return (
     <MantineProvider theme={bmApplyTheme}>
-      <BackgroundImage src={background}>
-        <RouterProvider router={appRouter} />
-      </BackgroundImage>
+      <RouterProvider router={appRouter} />
     </MantineProvider>
   )
 }
