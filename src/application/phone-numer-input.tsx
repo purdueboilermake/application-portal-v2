@@ -12,12 +12,12 @@ export const PhoneNumberInput: FC<PhoneNumberInputProps> = (props: PhoneNumberIn
 
   return (
     <InputBase<typeof IMaskInput>
-        withAsterisk
-        label="Your phone"
-        component={IMaskInput}
-        mask="+1 (000) 000-0000"
-        placeholder="Your phone"
-        {...props.form.getInputProps('phone')}
-      />
+      withAsterisk
+      label="Phone Number"
+      component={IMaskInput}
+      mask="+1 (000) 000-0000"
+      placeholder="Phone Number"
+      {...props.form.getInputProps('phone')}
+    />
   )
 }

@@ -23,10 +23,10 @@ export const MajorSelector: FC<MajorSelectorProps> = ({ form }: MajorSelectorPro
     <Autocomplete
       withAsterisk
       label='Major'
-      description='If you have multiple majors, choose one that describes you best'
+      description='Choose the major that describes you best'
       placeholder="Choose a degree or enter one in"
       data={defaultDegrees}
       {...form.getInputProps('major')}
-      />
+    />
   );
 }

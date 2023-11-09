@@ -43,6 +43,9 @@ export const validAge: NumberFieldValidator = (value: number) => {
     if (value <= 0) {
         return 'Input must be greater than zero';
     }
+    if (value < 18) {
+        return 'Input must be at least 18';
+    }
 
     return null;
 }

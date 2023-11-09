@@ -8,11 +8,11 @@ export interface GenderSelectorProps {
 }
 
 const genderOptions = [
-  'Man',
-  'Woman',
-  'Transgender',
-  'Non-binary/non-conforming',
-  'Prefer not to respond',
+  'Male',
+  'Female',
+  'Non-Binary',
+  'Prefer not to say',
+  'Other'
 ];
 
 export const GenderSelector: FC<GenderSelectorProps> = ({ form }: GenderSelectorProps) => {
@@ -22,6 +22,6 @@ export const GenderSelector: FC<GenderSelectorProps> = ({ form }: GenderSelector
       label='Gender'
       data={genderOptions}
       {...form.getInputProps('gender')}
-      />
+    />
   )
 }

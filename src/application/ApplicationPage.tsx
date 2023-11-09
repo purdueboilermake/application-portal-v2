@@ -1,4 +1,4 @@
-import { Anchor, Button, Card, Container,  Grid, GridCol, LoadingOverlay, NumberInput, Select, TextInput, Textarea } from "@mantine/core";
+import { Anchor, Button, Card, Container, Grid, GridCol, LoadingOverlay, NumberInput, Select, TextInput, Textarea } from "@mantine/core";
 import { FC, PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { AuthContext } from "../auth-context";
 import { useLoaderData, useNavigate } from "react-router-dom";
@@ -28,7 +28,7 @@ interface FormSubsectionProps extends PropsWithChildren {
 const FormSubsection: FC<FormSubsectionProps> = ({ title, children }) => {
   return (
     <div className="form-subsection-container">
-      <h5>{title}</h5>
+      <h3>{title}</h3>
       {children}
     </div>
   )
@@ -138,21 +138,21 @@ export function ApplicationPage() {
                   withAsterisk
                   label='First Name'
                   {...form.getInputProps('firstName')}
-                  />
+                />
               </GridCol>
               <GridCol span={horizontalColSpan}>
                 <TextInput
                   withAsterisk
                   label='Last Name'
                   {...form.getInputProps('lastName')}
-                  />
+                />
               </GridCol>
             </Grid>
 
             <TextInput
               label='Preferred Name'
               {...form.getInputProps('preferredName')}
-              />
+            />
 
             <TextInput
               withAsterisk
@@ -160,17 +160,17 @@ export function ApplicationPage() {
               disabled
               description='This is the email tied to your GitHub account. It cannot be changed'
               {...form.getInputProps('email')}
-              />
+            />
 
             <TextInput
               label='Alternate Email'
               description='Provide an alternate email for communication'
               {...form.getInputProps('altEmail')}
-              />
+            />
 
             <PhoneNumberInput
               form={form}
-              />
+            />
 
             <NumberInput
               withAsterisk
@@ -178,17 +178,17 @@ export function ApplicationPage() {
               allowNegative={false}
               allowDecimal={false}
               {...form.getInputProps('age')}
-              />
+            />
 
             <GenderSelector
               form={form}
-              />
+            />
 
             <TextInput
               withAsterisk
-              label='Country of Origin'
+              label='Country of Residence'
               {...form.getInputProps('country')}
-              />
+            />
           </FormSubsection>
           <FormSubsection title="Education">
             <SchoolSelector form={form} />
@@ -206,7 +206,7 @@ export function ApplicationPage() {
               placeholder="Please explain why you want to attend BoilerMake."
               maxLength={2000}
               {...form.getInputProps('whyBM')}
-              />
+            />
 
             <Textarea
               withAsterisk
@@ -216,7 +216,7 @@ export function ApplicationPage() {
               placeholder="Describe any project ideas you have. Bullet points are acceptable."
               maxLength={2000}
               {...form.getInputProps('projectIdeas')}
-              />
+            />
 
             <Select
               withAsterisk
@@ -224,20 +224,20 @@ export function ApplicationPage() {
               description='Sizes are unisex'
               data={['XSmall', 'Small', 'Medium', 'Large', 'XLarge', 'XXLarge']}
               {...form.getInputProps('shirtSize')}
-              />
+            />
 
             <TextInput
               label='Dietary Restrictions'
               placeholder="Leave blank if none"
               {...form.getInputProps('dietaryRestrictions')}
-              />
+            />
 
           </FormSubsection>
           <FormSubsection title="Resume Upload">
             <ResumeUpload
               onFileChange={setResumeFile}
-              />
-            { existingResumeInfo &&
+            />
+            {existingResumeInfo &&
               <p>Resume already on file: <Anchor href={existingResumeInfo.downloadLink}>{existingResumeInfo.name}</Anchor></p>
             }
           </FormSubsection>
@@ -245,10 +245,10 @@ export function ApplicationPage() {
             <MlhComplianceCheckboxes form={form} />
           </FormSubsection>
 
-          <Button size="lg" disabled={formDisabled} style={{marginTop: 16}} variant="gradient" type="submit">
-            { lastSubmitted ? 'UPDATE' : 'SUBMIT' }
+          <Button size="lg" disabled={formDisabled} style={{ marginTop: 16 }} variant="gradient" type="submit">
+            {lastSubmitted ? 'UPDATE' : 'SUBMIT'}
           </Button>
-          <Button size="lg" style={{marginTop: 8}} variant="outline" onClick={saveFormCallback}>
+          <Button size="lg" style={{ marginTop: 8 }} variant="outline" onClick={saveFormCallback}>
             SAVE PROGRESS
           </Button>
         </form>
