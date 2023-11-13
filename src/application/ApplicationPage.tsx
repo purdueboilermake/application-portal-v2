@@ -1,7 +1,7 @@
-import { Anchor, Button, Card, Container, Grid, GridCol, LoadingOverlay, NumberInput, Select, TextInput, Textarea } from "@mantine/core";
+import { Anchor, Button, Card, Container, Grid, GridCol, LoadingOverlay, NumberInput, Select, TextInput, Textarea, Text} from "@mantine/core";
 import { FC, PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { AuthContext } from "../auth-context";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { DocumentReference, onSnapshot } from "firebase/firestore";
 import { BoilermakeApplication, defaultBoilermakeApplication } from "../service/application";
 
@@ -126,7 +126,7 @@ export function ApplicationPage() {
   return (
     <Container pt={isPhoneDevice ? 90 : undefined} pb={50}>
       <Card>
-        <h3>Application for {currentUser?.displayName}</h3>
+        <h3>Application for {currentUser?.displayName ?? 'Current User'}</h3>
         <form onSubmit={form.onSubmit(submitFormCallback)} className="application-form-container">
           <FormSubsection
             title="Personal Information"
@@ -252,6 +252,16 @@ export function ApplicationPage() {
           <Button size="lg" style={{ marginTop: 8 }} variant="outline" onClick={saveFormCallback}>
             SAVE PROGRESS
           </Button>
+          <Text c={'#8c8c8c'} p={8}>
+            After submitting, you have until applications close to modify your response. Alternativly, you can save your
+            application and submit later. Pending applications are on your <Link to='/profile'>profile page</Link>.
+            We will not consider unsubmitted applications.
+          </Text>
+          { /*
+          <Text>
+            Experiencing technical issues with the application? Contact <Anchor href="mailto:softwaresale01@gmail.com">the BoilerMake Team</Anchor> for help.
+          </Text>
+          */ }
         </form>
       </Card>
     </Container>
