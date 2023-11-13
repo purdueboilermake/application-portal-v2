@@ -3,6 +3,7 @@ import { FC, useEffect, useState } from "react";
 
 interface ResumeUploadProps {
   onFileChange: (file: File | null) => void;
+  missing: boolean;
 }
 
 const validateFileName = (name: string) => {
@@ -46,6 +47,9 @@ export const ResumeUpload: FC<ResumeUploadProps> = (props: ResumeUploadProps) =>
       <Button disabled={!file} color="red" onClick={clearFile}>
         Reset
       </Button>
+      { props.missing &&
+        <Text c='red'>Resume is required</Text>
+      }
       {file &&
         <p>Selected file: {file.name}</p>
       }

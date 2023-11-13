@@ -235,6 +235,7 @@ export function ApplicationPage() {
           </FormSubsection>
           <FormSubsection title="Resume Upload">
             <ResumeUpload
+              missing={!(resumeFile !== null || existingResumeInfo !== null)}
               onFileChange={setResumeFile}
             />
             {existingResumeInfo &&
