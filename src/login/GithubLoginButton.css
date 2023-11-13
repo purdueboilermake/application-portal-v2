@@ -1,0 +1,10 @@
+
+.gh-login-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.gh-login-button span {
+    padding: 4px 6px;
+}
