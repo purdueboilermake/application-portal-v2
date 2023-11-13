@@ -22,8 +22,8 @@ export const MajorSelector: FC<MajorSelectorProps> = ({ form }: MajorSelectorPro
     <Autocomplete
       withAsterisk
       label='Major'
-      description='Choose the major that describes you best'
-      placeholder="Choose a degree or enter one in"
+      placeholder='Choose the major that describes you best'
+      description="Choose a major or type one in"
       data={defaultDegrees}
       {...form.getInputProps('major')}
     />

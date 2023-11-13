@@ -10,7 +10,7 @@ export function ConfirmationPage() {
     <Container pt={isPhoneDevice ? 100 : undefined}>
       <Card>
         <h3>Congratulations</h3>
-        <p>Your application for BMXI is officially submitting! You can now close this webpage</p>
+        <p>Your application for BMXI is officially submitted! You can now close this webpage</p>
         <Link to={"/profile"}>Go to your profile</Link>
       </Card>
     </Container>

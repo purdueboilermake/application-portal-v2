@@ -20,6 +20,7 @@ export const SchoolSelector: FC<SchoolSelectorProps> = ({ form }: SchoolSelector
     <Autocomplete
       withAsterisk
       label='University'
+      description='Choose a university or type on in'
       placeholder="The university you attend"
       data={defaultSchools}
       {...form.getInputProps('school')}
