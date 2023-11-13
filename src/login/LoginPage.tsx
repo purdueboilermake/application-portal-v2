@@ -1,4 +1,4 @@
-import { Alert, Button, Container, Loader, Stack, Text } from "@mantine/core";
+import { Alert, Container, Loader, Stack, Text } from "@mantine/core";
 import { GithubAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { ServiceContainer } from "../service/service-container";
