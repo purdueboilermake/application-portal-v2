@@ -1,6 +1,5 @@
-import { Autocomplete, Combobox, TextInput, useCombobox } from "@mantine/core";
-import { FC, useState } from "react";
-import { useBMFormContext } from "./application-form-context";
+import { Autocomplete } from "@mantine/core";
+import { FC } from "react";
 import { UseFormReturnType } from "@mantine/form";
 import { BoilermakeApplication } from "../service/application";
 
