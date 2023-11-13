@@ -33,7 +33,7 @@ export function Root() {
   const onLogout = useCallback(async () => {
     await signOut(auth);
     navigator('/login');
-  }, []);
+  }, [auth, navigator]);
 
   return (
     <AppShell

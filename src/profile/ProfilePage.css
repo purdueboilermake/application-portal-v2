@@ -1,0 +1,14 @@
+
+.profile-subsection-container {
+    padding: 32px;
+    border-radius: 16px;
+    background-color: aliceblue;
+}
+
+.user-info-container h3, h4 {
+    margin: 0;
+}
+
+.user-info-container h3 {
+    font-weight: bold;
+}

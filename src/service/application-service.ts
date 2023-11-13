@@ -64,7 +64,7 @@ export class ApplicationService {
         }
     }
 
-    private async findUserForm(user: User): Promise<DocumentReference | null> {
+    async findUserForm(user: User): Promise<DocumentReference | null> {
         const documents = await getDocs(query(this.applications, where('email', '==', user.email)));
         if (documents.empty) {
             return null;
