@@ -4,7 +4,7 @@ import { AppShell, Button, Center, Image, Space } from '@mantine/core';
 import main_logo from './assets/main_logo.png';
 
 import './Root.css';
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { User, getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { AuthContext } from "./auth-context";
 import "./firebase-config";
@@ -19,19 +19,21 @@ export function Root() {
   const navigator = useNavigate();
 
   // watch the current user
-  onAuthStateChanged(auth,
-    newUser => {
-      setUser(newUser);
-    },
-    err => {
-      throw err;
-    }
-  );
+  useEffect(() => {
+    onAuthStateChanged(auth,
+      newUser => {
+        setUser(newUser);
+      },
+      err => {
+        throw err;
+      }
+    );
+  }, [auth]);
 
   const onLogout = useCallback(async () => {
     await signOut(auth);
     navigator('/login');
-  }, [auth]);
+  }, []);
 
   return (
     <AppShell

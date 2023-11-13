@@ -1,13 +1,18 @@
-import { Center, Stack } from "@mantine/core";
+import { Card, Container } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
+import { Link } from "react-router-dom";
 
 export function ConfirmationPage() {
 
+
+  const isPhoneDevice = useMediaQuery('(max-width: 575px)');
   return (
-    <Center>
-      <Stack>
+    <Container pt={isPhoneDevice ? 100 : undefined}>
+      <Card>
         <h1>Congratulations</h1>
         <p>Your application for BMXI is officially submitting! You can now close this webpage</p>
-      </Stack>
-    </Center>
+        <Link to={"/profile"}>Go to your profile</Link>
+      </Card>
+    </Container>
   )
 }
