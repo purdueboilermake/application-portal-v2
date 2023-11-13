@@ -257,11 +257,10 @@ export function ApplicationPage() {
             application and submit later. Pending applications are on your <Link to='/profile'>profile page</Link>.
             We will not consider unsubmitted applications.
           </Text>
-          { /*
           <Text>
-            Experiencing technical issues with the application? Contact <Anchor href="mailto:softwaresale01@gmail.com">the BoilerMake Team</Anchor> for help.
+            Experiencing technical issues with the application? Email <Anchor href="mailto:bmake@purdue.edu" target="_blank">bmake@purdue.edu</Anchor> or DM
+            us on Instagram <Anchor href="https://ig.me/m/boilermake" target="_blank">@boilermake</Anchor>.
           </Text>
-          */ }
         </form>
       </Card>
     </Container>
