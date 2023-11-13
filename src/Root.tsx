@@ -1,15 +1,16 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import { AppShell, Button, Center, Image, Space } from '@mantine/core';
+import { AppShell, Avatar, Center, Flex, Image } from '@mantine/core';
 
 import main_logo from './assets/main_logo.png';
 
 import './Root.css';
 import { useCallback, useEffect, useState } from "react";
-import { User, getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { User, getAuth, onAuthStateChanged } from "firebase/auth";
 import { AuthContext } from "./auth-context";
 import "./firebase-config";
 
-const responsiveToolbarHeight = { base: 48, sm: 60, lg: 76 };
+const responsiveToolbarHeight = { base: 54, sm: 60, lg: 76 };
+const responsiveImageHeight = { base: 50, sm: 56, lg: 72 };
 
 export function Root() {
 
@@ -30,10 +31,9 @@ export function Root() {
     );
   }, [auth]);
 
-  const onLogout = useCallback(async () => {
-    await signOut(auth);
-    navigator('/login');
-  }, [auth, navigator]);
+  const onProfileClick = useCallback(async () => {
+    await navigator('/profile');
+  }, [navigator]);
 
   return (
     <AppShell
@@ -42,20 +42,21 @@ export function Root() {
       padding={{ xs: 'sm', sm: 'sm', md: 'md', lg: 'xl', xl: 'xl' }}
     >
       <AppShell.Header>
-        <div className="logo-container">
-          <Image src={main_logo} h={responsiveToolbarHeight} w="auto" fit="contain" />
-          <h4 style={{margin: 0}}>BoilerMake Apply</h4>
-          <Space />
-          { user &&
-            <>
-            <p>{ user.displayName }</p>
-            <Button variant="subtle" c='red' onClick={onLogout}>Log Out</Button>
-            </>
-          }
-          { !user &&
-            <p>Not logged in</p>
-          }
-        </div>
+        <Flex>
+          <div className="logo-container">
+            <Image src={main_logo} h={responsiveImageHeight} w="auto" fit="contain" />
+            <h4 style={{margin: 0}}>BoilerMake Apply</h4>
+          </div>
+          <span style={{flex: 1}}></span>
+          <div className="login-info-container">
+            { user &&
+              <Avatar
+                className="profile-avatar-button"
+                src={user.photoURL ?? 'https://www.personality-insights.com/wp-content/uploads/2017/12/default-profile-pic-e1513291410505.jpg'}
+                onClick={onProfileClick} />
+            }
+          </div>
+        </Flex>
       </AppShell.Header>
       <AppShell.Main style={{maxHeight: '100dvh', overflowY: 'auto'}}>
         <Center>

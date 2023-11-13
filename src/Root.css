@@ -8,3 +8,13 @@
 .logo-container h2 {
     margin: 0;
 }
+
+.login-info-container {
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+}
+
+.profile-avatar-button:hover {
+    scale: 1.15;
+}

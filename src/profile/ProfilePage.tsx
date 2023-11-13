@@ -1,14 +1,22 @@
-import { Flex, Group, Image, Stack, Text } from "@mantine/core";
-import { useLoaderData } from "react-router-dom";
-import { User } from "firebase/auth";
+import { Button, Flex, Group, Image, Stack, Text } from "@mantine/core";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import { User, getAuth, signOut } from "firebase/auth";
 
 import './ProfilePage.css';
 import { GenericPage } from "../GenericPage";
 import { ApplicationsSection } from "./ApplicationSection";
+import { useCallback, useMemo } from "react";
 
 export function ProfilePage() {
 
   const currentUser = useLoaderData() as User;
+  const navigator = useNavigate();
+  const auth = useMemo(() => getAuth(), []);
+
+  const onLogout = useCallback(async () => {
+    await signOut(auth);
+    navigator('/login');
+  }, [auth, navigator]);
 
   return (
     <GenericPage>
@@ -24,6 +32,7 @@ export function ProfilePage() {
           <Stack className="user-info-container">
             <h3>{ currentUser?.displayName ?? currentUser?.uid }</h3>
             <h4>{ currentUser?.email }</h4>
+            <Button color="red" onClick={onLogout}>Log Out</Button>
           </Stack>
         </Group>
         <Stack className="profile-subsection-container">
