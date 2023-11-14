@@ -12,7 +12,12 @@ export const rootLoader: LoaderFunction = async () => {
 
     // otherwise, find the application for the given user and go there
     const userApplication = await appService.getOrCreateUserApplication(currentUser);
-    return redirect(`/application/${userApplication.id}`);
+    const status = await appService.getApplicationStatus(userApplication);
+    if (status === 'UNSUBMITTED') {
+        return redirect(`/application/${userApplication.id}`);
+    } else {
+        return redirect('/profile');
+    }
 }
 
 // don't revalidate the loader when navigating to the login page from the root page

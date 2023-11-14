@@ -1,7 +1,7 @@
 import { FirebaseApp } from "firebase/app";
 import { User } from "firebase/auth";
 import { CollectionReference, Firestore, collection, getFirestore, where, query, getDocs,  DocumentReference, addDoc, getDoc, doc, setDoc } from "firebase/firestore";
-import { BoilermakeApplication, defaultBoilermakeApplication } from "./application";
+import { BoilermakeApplication, BoilermakeApplicationStatus, defaultBoilermakeApplication } from "./application";
 import { FileUploadService } from "./file-upload-service";
 import "../firebase-config";
 
@@ -71,6 +71,12 @@ export class ApplicationService {
         }
 
         return documents.docs[0].ref;
+    }
+
+    async getApplicationStatus(ref: DocumentReference): Promise<BoilermakeApplicationStatus> {
+        const doc = await getDoc(ref);
+        const status = await doc.get('appStatus') as BoilermakeApplicationStatus;
+        return status;
     }
 
     private async createApplicationForUser(user: User): Promise<DocumentReference> {

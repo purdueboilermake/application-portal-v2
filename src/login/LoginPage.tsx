@@ -24,8 +24,13 @@ export function LoginPage() {
       const user = result.user;
       setIndicatorMessage('Preparing your application...');
       const userApplication = await applicationService.getOrCreateUserApplication(user);
-      console.log(`Got user application id ${userApplication.id}`);
-      navigator(`/application/${userApplication.id}`);
+      const appStatus = await applicationService.getApplicationStatus(userApplication);
+      if (appStatus === 'UNSUBMITTED') {
+        console.log(`Got user application id ${userApplication.id}`);
+        navigator(`/application/${userApplication.id}`);
+      } else {
+        navigator('/profile');
+      }
     } catch (err: unknown) {
       setLoading(false);
       setIndicatorMessage(null);
