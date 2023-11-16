@@ -9,12 +9,11 @@ interface DegreeSelectorProps {
 }
 
 const defaultDegreeOptions = [
-  'High School',
-  'Associates Degree',
-  'Bachelors Degree',
+  'Secondary / High School',
+  'Undergraduate University (2 year - community college or similar)',
+  'Undergraduate University (3+ year)',
   'Masters Degree',
-  'Professional Degree',
-  'Doctorate'
+  'Graduate University (Masters, Professional, Doctoral, etc)',
 ]
 
 export const DegreeSelector: FC<DegreeSelectorProps> = ({ form, disabled = false }: DegreeSelectorProps) => {
