@@ -21,7 +21,7 @@ export const DegreeSelector: FC<DegreeSelectorProps> = ({ form, disabled = false
   return (
     <Select
       withAsterisk
-      label='Degree'
+      label='Level of Study'
       placeholder="What degree are you currently pursuing"
       data={defaultDegreeOptions}
       disabled={disabled}
