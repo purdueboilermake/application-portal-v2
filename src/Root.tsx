@@ -2,6 +2,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { AppShell, Avatar, Center, Flex, Image } from '@mantine/core';
 
 import main_logo from './assets/main_logo.png';
+import mlh_logo from './assets/mlh-logo-color.png';
 
 import './Root.css';
 import { useCallback, useEffect, useState } from "react";
@@ -45,6 +46,7 @@ export function Root() {
         <Flex>
           <div className="logo-container">
             <Image src={main_logo} h={responsiveImageHeight} w="auto" fit="contain" />
+            <Image src={mlh_logo} h={responsiveImageHeight} w="auto" fit="contain" p='8px' />
             <h4 style={{margin: 0}}>BoilerMake Apply</h4>
           </div>
           <span style={{flex: 1}}></span>
