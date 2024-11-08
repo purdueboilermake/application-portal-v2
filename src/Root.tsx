@@ -36,6 +36,10 @@ export function Root() {
     await navigator('/profile');
   }, [navigator]);
 
+  const onTeamsClick = useCallback(async () => {
+    await navigator('/teams');
+  }, [navigator]);
+
   return (
     <AppShell
       header={{ height: responsiveToolbarHeight }}
@@ -50,6 +54,9 @@ export function Root() {
             <h4 style={{margin: 0}}>BoilerMake Apply</h4>
           </div>
           <span style={{flex: 1}}></span>
+          <div className="toolbar-button-container" style={{ display: 'flex', alignItems: 'center' }}>
+            <button className="toolbar-button" onClick={onTeamsClick}>Teams</button>
+          </div>
           <div className="login-info-container">
             { user &&
               <Avatar
