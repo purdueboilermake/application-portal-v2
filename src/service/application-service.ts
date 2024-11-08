@@ -31,7 +31,7 @@ export class ApplicationService {
     async userOwnsApplication(appDoc: DocumentReference, user: User): Promise<boolean> {
         const snapshot = await getDoc(appDoc);
         const docData = snapshot.data() as BoilermakeApplication;
-        return docData.email === user.email;
+        return docData.githubEmail === user.email;
     }
 
     async getOrCreateUserApplication(user: User): Promise<DocumentReference> {
@@ -65,7 +65,7 @@ export class ApplicationService {
     }
 
     async findUserForm(user: User): Promise<DocumentReference | null> {
-        const documents = await getDocs(query(this.applications, where('email', '==', user.email)));
+        const documents = await getDocs(query(this.applications, where('githubEmail', '==', user.email)));
         if (documents.empty) {
             return null;
         }
@@ -82,8 +82,7 @@ export class ApplicationService {
     private async createApplicationForUser(user: User): Promise<DocumentReference> {
         return addDoc(this.applications, {
             ...defaultBoilermakeApplication,
-            email: user.email,
-            phone: user.phoneNumber ?? '', // it might be provided??
+            githubEmail: user.email,
         } as BoilermakeApplication);
     }
 }

@@ -54,12 +54,12 @@ export function ApplicationPage() {
     validate: {
       firstName: nonBlankString,
       lastName: nonBlankString,
+      email: combineValidators([nonBlankString, validEmail]),
       gender: nonBlankString,
       phone: combineValidators([nonBlankString, validPhoneNumber]),
       age: validAge,
       country: nonBlankString,
       degree: nonBlankString,
-      altEmail: validEmail,
       major: nonBlankString,
       year: nonBlankString,
       whyBM: combineValidators([nonBlankString, maxLength(2000)]),
@@ -157,15 +157,8 @@ export function ApplicationPage() {
             <TextInput
               withAsterisk
               label='Email'
-              disabled
-              description='This is the email tied to your GitHub account. It cannot be changed'
+              description='This is the email we will use for communication.'
               {...form.getInputProps('email')}
-            />
-
-            <TextInput
-              label='Alternate Email'
-              description='Provide an alternate email for communication'
-              {...form.getInputProps('altEmail')}
             />
 
             <PhoneNumberInput

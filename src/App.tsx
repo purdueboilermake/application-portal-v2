@@ -15,6 +15,7 @@ import { rootLoader } from './root-loader';
 import { ConfirmationPage } from './confirmation/ConfirmationPage';
 import { ProfilePage } from './profile/ProfilePage';
 import { profilePageLoader } from './profile/profile-loader';
+import TeamsPage from './teams/TeamsPage';
 
 const appRouter = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const appRouter = createBrowserRouter([
         path: 'profile',
         element: <ProfilePage />,
         loader: profilePageLoader,
+      },
+      {
+        path: 'teams',
+        element: <TeamsPage/>
       }
     ]
   }
