@@ -5,13 +5,29 @@ import { User, getAuth, signOut } from "firebase/auth";
 import './ProfilePage.css';
 import { GenericPage } from "../GenericPage";
 import { ApplicationsSection } from "./ApplicationSection";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState, useEffect } from "react";
+import { DocumentReference, getDoc } from "firebase/firestore";
+import { BoilermakeApplication, defaultBoilermakeApplication } from "../service/application";
 
 export function ProfilePage() {
 
-  const currentUser = useLoaderData() as User;
+  const { currentUser, currentApplication } = useLoaderData() as { currentUser: User, currentApplication: DocumentReference };
+  const [applicationData, setApplicationData] = useState<BoilermakeApplication>(defaultBoilermakeApplication);
   const navigator = useNavigate();
   const auth = useMemo(() => getAuth(), []);
+
+  useEffect(() => {
+    const fetchApplicationData = async () => {
+      const docSnap = await getDoc(currentApplication);
+      if (docSnap.exists()) {
+        setApplicationData(docSnap.data() as BoilermakeApplication);
+      } else {
+        setApplicationData(defaultBoilermakeApplication);
+      }
+    };
+
+    fetchApplicationData();
+  }, [currentApplication]);
 
   const onLogout = useCallback(async () => {
     await signOut(auth);
@@ -30,8 +46,8 @@ export function ProfilePage() {
             fit="fill"
             />
           <Stack className="user-info-container">
-            <h3>{ currentUser?.displayName ?? currentUser?.uid }</h3>
-            <h4>{ currentUser?.email }</h4>
+            { applicationData.appStatus != 'UNSUBMITTED' ? <h3>{ applicationData.firstName } { applicationData.lastName }</h3> : <h3>Name Not Found</h3> }
+            { applicationData.appStatus != 'UNSUBMITTED' ? <h4>{ applicationData.email }</h4> : <h4>Email Not Found</h4> }
             <Button color="red" onClick={onLogout}>Log Out</Button>
           </Stack>
         </Group>

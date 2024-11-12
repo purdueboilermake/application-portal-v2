@@ -15,7 +15,7 @@ export class ApplicationService {
         } else {
             this.firestore = getFirestore();
         }
-        this.applications = collection(this.firestore, 'application');
+        this.applications = collection(this.firestore, 'application-25');
     }
 
     async findApplication(id: string): Promise<DocumentReference | null> {
