@@ -8,6 +8,7 @@ export interface BoilermakeApplication {
     preferredName: string;
     gender: string;
     age: number;
+    githubEmail: string;
     altEmail: string;
     phone: string;
     degree: string;
@@ -34,6 +35,7 @@ export const defaultBoilermakeApplication: BoilermakeApplication = {
     gender:'',
     degree:'',
     email: '',
+    githubEmail: '',
     school: '',
     major: '',
     year: '',

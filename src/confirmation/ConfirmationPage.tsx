@@ -12,6 +12,7 @@ export function ConfirmationPage() {
         <h3>Congratulations</h3>
         <p>Your application for BMXI is officially submitted! You can now close this webpage</p>
         <Link to={"/profile"}>Go to your profile</Link>
+        <Link to={"/teams"}>Go to the teams portal</Link>
       </Card>
     </Container>
   )
