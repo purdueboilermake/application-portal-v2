@@ -40,15 +40,33 @@ export class TeamsService {
         } as BoilermakeTeam);
     }
 
-    async inviteUserToTeam(user: User, email: string) {
+    async addUserToTeam(user: User, email: string) {
         const documents = await getDocs(query(this.teams, where('teamLeaderGitHubEmail', '==', email)));
         if (documents.empty) {
             throw Error("team does not exist!");
         }
         const teamRef = documents.docs[0].ref;
         updateDoc(teamRef, {
-            pendingMemberGitHubEmails: arrayUnion(user.email)
+            memberGitHubEmails: arrayUnion(user.email)
         })
+    }
+
+    async sendInviteToUser(inviter: User, inviteeEmail: string): Promise<void> {
+        const teamRef = await this.findTeamByLeaderUser(inviter);
+        if (!teamRef) {
+            throw new Error("Inviter does not lead any team");
+        }
+
+        const teamDoc = await getDoc(teamRef);
+        const teamData = teamDoc.data() as BoilermakeTeam;
+
+        if (teamData.pendingMemberGitHubEmails.includes(inviteeEmail) || teamData.memberGitHubEmails.includes(inviteeEmail)) {
+            throw new Error("User is already invited or a member of the team");
+        }
+
+        await updateDoc(teamRef, {
+            pendingMemberGitHubEmails: arrayUnion(inviteeEmail)
+        });
     }
 
     async removeInviteToTeam(user: User, email: string){

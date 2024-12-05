@@ -65,14 +65,14 @@ export default function InviteComponent({
   });
 
   const handleInvite = async (values: { email: string }) => {
-    // Simulating an API call
-    // teamsService.addUserToTeam()
     notifications.show({
       title: "Invitation Sent",
       message: `Invitation sent to ${values.email}`,
       color: "green",
     });
-    form.reset();
+    await teamsService.sendInviteToUser(currentUser, values.email);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    window.location.reload();
   };
 
   const handleCreateTeam = async () => {
@@ -93,7 +93,7 @@ export default function InviteComponent({
       message: "You have joined the team!",
       color: "green",
     });
-    await teamsService.inviteUserToTeam(currentUser, email);
+    await teamsService.addUserToTeam(currentUser, email);
     await teamsService.removeInviteToTeam(currentUser, email);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     window.location.reload();
