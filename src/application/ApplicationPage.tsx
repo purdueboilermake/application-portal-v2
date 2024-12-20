@@ -20,6 +20,7 @@ import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { PhoneNumberInput } from "./phone-numer-input";
 import { ResumeFileInfo } from "../service/file-upload-service";
 import { notifications } from '@mantine/notifications';
+import { DietaryRestrictionSelector } from "./dietary-restriction-selector";
 
 interface FormSubsectionProps extends PropsWithChildren {
   title: string;
@@ -219,11 +220,7 @@ export function ApplicationPage() {
               {...form.getInputProps('shirtSize')}
             />
 
-            <TextInput
-              label='Dietary Restrictions'
-              placeholder="Leave blank if none"
-              {...form.getInputProps('dietaryRestrictions')}
-            />
+            <DietaryRestrictionSelector form={form} />
 
           </FormSubsection>
           <FormSubsection title="Resume Upload">
