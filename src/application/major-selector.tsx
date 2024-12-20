@@ -25,6 +25,7 @@ export const MajorSelector: FC<MajorSelectorProps> = ({ form }: MajorSelectorPro
       placeholder='Choose the major that describes you best'
       description="Choose a major or type one in"
       data={defaultDegrees}
+      maxLength={50}
       {...form.getInputProps('major')}
     />
   );

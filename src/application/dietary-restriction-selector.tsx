@@ -20,6 +20,7 @@ export const DietaryRestrictionSelector: FC<DietaryRestrictionSelectorProps> = (
       label='Dietary Restrictions'
       placeholder="Leave blank if none"
       data={defaultDietaryRestrictions}
+      maxLength={50}
       {...form.getInputProps('dietaryRestrictions')}
       />
   )

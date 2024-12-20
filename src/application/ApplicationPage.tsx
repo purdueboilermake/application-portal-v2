@@ -138,6 +138,7 @@ export function ApplicationPage() {
                 <TextInput
                   withAsterisk
                   label='First Name'
+                  maxLength={50}
                   {...form.getInputProps('firstName')}
                 />
               </GridCol>
@@ -145,6 +146,7 @@ export function ApplicationPage() {
                 <TextInput
                   withAsterisk
                   label='Last Name'
+                  maxLength={50}
                   {...form.getInputProps('lastName')}
                 />
               </GridCol>
@@ -152,12 +154,14 @@ export function ApplicationPage() {
 
             <TextInput
               label='Preferred Name'
+              maxLength={50}
               {...form.getInputProps('preferredName')}
             />
 
             <TextInput
               withAsterisk
               label='Email'
+              maxLength={50}
               description='This is the email we will use for communication.'
               {...form.getInputProps('email')}
             />
@@ -181,6 +185,7 @@ export function ApplicationPage() {
             <TextInput
               withAsterisk
               label='Country of Residence'
+              maxLength={50}
               {...form.getInputProps('country')}
             />
           </FormSubsection>

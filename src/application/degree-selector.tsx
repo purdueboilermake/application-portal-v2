@@ -25,6 +25,7 @@ export const DegreeSelector: FC<DegreeSelectorProps> = ({ form, disabled = false
       placeholder="What degree are you currently pursuing"
       data={defaultDegreeOptions}
       disabled={disabled}
+      maxLength={50}
       {...form.getInputProps('degree')}
       />
   )

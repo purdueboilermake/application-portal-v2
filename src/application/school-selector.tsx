@@ -23,6 +23,7 @@ export const SchoolSelector: FC<SchoolSelectorProps> = ({ form }: SchoolSelector
       description='Choose a university or type on in'
       placeholder="The university you attend"
       data={defaultSchools}
+      maxLength={50}
       {...form.getInputProps('school')}
       />
   )
