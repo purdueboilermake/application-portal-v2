@@ -46,8 +46,8 @@ export function ProfilePage() {
             fit="fill"
             />
           <Stack className="user-info-container">
-            { applicationData.appStatus != 'UNSUBMITTED' ? <h3>{ applicationData.firstName } { applicationData.lastName }</h3> : <h3>Name Not Found</h3> }
-            { applicationData.appStatus != 'UNSUBMITTED' ? <h4>{ applicationData.email }</h4> : <h4>Email Not Found</h4> }
+            { applicationData.appStatus != 'UNSUBMITTED' ? <h3>{ applicationData.firstName } { applicationData.lastName }</h3> : <h3>Submit Application</h3> }
+            { applicationData.appStatus != 'UNSUBMITTED' ? <h4>{ applicationData.email }</h4> : <h4></h4> }
             <Button color="red" onClick={onLogout}>Log Out</Button>
           </Stack>
         </Group>
