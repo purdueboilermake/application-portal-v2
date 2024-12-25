@@ -68,6 +68,8 @@ export function ApplicationPage() {
       shirtSize: nonBlankString,
       agreeToCodeOfConduct: (value) => value ? null : 'Required',
       agreeToTermsAndConditions: (value) => value ? null : 'Required',
+      agreeToRSVP: (value) => value ? null : 'Required',
+      consentToPhoto: (value) => value ? null : 'Required',
     },
   });
 

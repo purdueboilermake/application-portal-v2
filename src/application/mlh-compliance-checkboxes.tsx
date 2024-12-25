@@ -21,6 +21,7 @@ export const MlhComplianceCheckboxes: FC<MlhComplianceCheckboxesProps> = ({form}
             </Anchor>. (Required)
             </>
           }
+          style={{ marginBottom: '8px' }} 
           {...form.getInputProps('agreeToCodeOfConduct', { type: 'checkbox' })}
         />
 
@@ -40,9 +41,30 @@ export const MlhComplianceCheckboxes: FC<MlhComplianceCheckboxesProps> = ({form}
             . (Required)
           </>
         }
-
+        style={{ marginBottom: '8px' }} 
         {...form.getInputProps('agreeToTermsAndConditions', {type: 'checkbox'})}
         />
+
+      <Checkbox
+        label={
+          <>
+            I agree to RSVP before the event if I intend on participating and I understand that if I don't RSVP I will not be guaranteed admission. (Required)
+          </>
+        }
+        style={{ marginBottom: '8px' }} 
+        {...form.getInputProps('agreeToRSVP', {type: 'checkbox'})}
+        />
+
+      <Checkbox
+        label={
+          <>
+            I allow Boilermake to take pictures of me and distribute them. (Required)
+          </>
+        }
+        style={{ marginBottom: '8px' }} 
+        {...form.getInputProps('consentToPhoto', {type: 'checkbox'})}
+        />
+      
 
       <Checkbox
         label={
@@ -50,6 +72,7 @@ export const MlhComplianceCheckboxes: FC<MlhComplianceCheckboxesProps> = ({form}
           I authorize MLH to send me occasional emails about relevant events, career opportunities, and community announcements. (Optional)
           </>
         }
+        style={{ marginBottom: '8px' }}
         {...form.getInputProps('recieveCommunications', {type: 'checkbox'})}
         />
     </>

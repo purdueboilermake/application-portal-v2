@@ -24,6 +24,8 @@ export interface BoilermakeApplication {
     agreeToCodeOfConduct: boolean;
     agreeToTermsAndConditions: boolean;
     recieveCommunications: boolean;
+    agreeToRSVP: boolean;
+    consentToPhoto: boolean;
     lastSubmitted: Date | null;
     appStatus: BoilermakeApplicationStatus;
 }
@@ -51,6 +53,8 @@ export const defaultBoilermakeApplication: BoilermakeApplication = {
     agreeToCodeOfConduct: false,
     agreeToTermsAndConditions: false,
     recieveCommunications: true,
+    agreeToRSVP: false,
+    consentToPhoto: false,
     lastSubmitted: null,
     appStatus: 'UNSUBMITTED',
 }
