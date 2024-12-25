@@ -67,7 +67,7 @@ export const ApplicationsSection: FC<ApplicationsSectionProps> = ({ user }: Appl
     <>
     {!loading && !noApps && appId &&
     <Flex align={'center'} gap={8}>
-      <Text>BoilerMake XI</Text>
+      <Text>BoilerMake XII</Text>
       <span style={{flex: 1}}></span>
       <Badge color={badgeColor(appStatus)} size="lg">{ appStatus }</Badge>
       <Button onClick={openApplication}>VIEW</Button>
